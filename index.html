@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本换行符转换器</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #212121;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid #bdbdbd;
+            padding: 10px;
+            font-size: 16px;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #212121;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #424242;
+        }
+        #output {
+            margin-top: 20px;
+            background-color: #f5f5f5;
+            padding: 10px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>文本换行符转换器</h1>
+        <textarea id="input" placeholder="请在此输入文本..."></textarea>
+        <button onclick="convert()">转换</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function convert() {
+            const input = document.getElementById('input').value;
+            const converted = input.replace(/\n/g, '\\n');
+            document.getElementById('output').textContent = converted;
+        }
+    </script>
+</body>
+</html>
