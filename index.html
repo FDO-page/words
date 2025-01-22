@@ -38,7 +38,6 @@
             }
         }
 
-
         .input-area, .output-area {
             flex: 1;
             margin-bottom: 15px; /* 为垂直布局时增加间距 */
@@ -67,7 +66,7 @@
             box-sizing: border-box;
         }
 
-        .download-area {
+        .download-area { /* 类名保持 download-area 以保持样式兼容，但功能已改为复制 */
             margin-top: 20px;
             text-align: center;
         }
@@ -76,14 +75,14 @@
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
-            background-color: #007bff;
+            background-color: #28a745; /* 修改按钮颜色为绿色，更符合“复制”的含义 */
             color: white;
             cursor: pointer;
             font-size: 16px;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838; /* 悬停时颜色略微变深 */
         }
     </style>
 </head>
@@ -105,7 +104,7 @@
         </div>
 
         <div class="download-area">
-            <button id="download-button">下载 HTML 文件</button>
+            <button id="copy-button">复制 HTML 代码</button>  <!-- 修改按钮文本和 ID -->
         </div>
     </div>
 
@@ -113,7 +112,7 @@
     <script>
         const markdownInput = document.getElementById('markdown-input');
         const htmlOutput = document.getElementById('html-output');
-        const downloadButton = document.getElementById('download-button');
+        const copyButton = document.getElementById('copy-button'); // 修改按钮 ID
 
         function updateHTML() {
             const markdownText = markdownInput.value;
@@ -123,17 +122,18 @@
 
         markdownInput.addEventListener('input', updateHTML);
 
-        downloadButton.addEventListener('click', function() {
+        copyButton.addEventListener('click', function() { // 修改按钮 ID
             const htmlContent = htmlOutput.innerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'markdown-output.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+
+            // 使用 Clipboard API 复制到剪贴板
+            navigator.clipboard.writeText(htmlContent)
+                .then(() => {
+                    alert('HTML 代码已复制到剪贴板！'); // 成功复制的提示
+                })
+                .catch(err => {
+                    console.error('复制到剪贴板失败: ', err);
+                    alert('复制到剪贴板失败，请手动复制。'); // 复制失败的提示
+                });
         });
 
         updateHTML(); // 页面加载时执行一次
